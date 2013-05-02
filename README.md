@@ -17,9 +17,12 @@ but I don't expect this to get a wide audience.
 ### Example
 
 ```
-if (Spork\Process::parent($child_pid)) {
+if (Spork\Process::parent($child_pid, $forked)) {
     // this is the parent process with $child_pid populated
 } else {
     // this is the child process, or forking failed
+    // forking success or failure can be seen with $forked
 }
 ```
+
+Both the arguments are optional.
