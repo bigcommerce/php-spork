@@ -1,0 +1,23 @@
+{
+    "name": "gwilym/spork",
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://github.com/gwilym/php-spork",
+    "authors": [
+        {
+            "name": "Gwilym",
+            "email": "gwilym@example.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "@stable"
+    },
+    "autoload": {
+        "psr-0": {
+            "Spork": "src"
+        }
+    }
+}
