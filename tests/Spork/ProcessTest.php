@@ -7,7 +7,7 @@ class ProcessTest extends \PHPUnit_Framework_TestCase
     public function testCanCallWhenPctnlDoesntExist()
     {
         if (function_exists('pcntl_fork')) {
-            $this->markTestSkipped('test ineffective when pcntl_fork is present');
+            $this->markTestSkipped();
         }
 
         $child = false;
@@ -24,7 +24,7 @@ class ProcessTest extends \PHPUnit_Framework_TestCase
     public function testCanForkWhenPctnlExists()
     {
         if (!function_exists('pcntl_fork')) {
-            $this->markTestSkipped('pcntl_fork not available for test');
+            $this->markTestSkipped();
         }
 
         $forked = false;
@@ -42,7 +42,7 @@ class ProcessTest extends \PHPUnit_Framework_TestCase
     public function testChildPidPopulatedOnFork()
     {
         if (!function_exists('pcntl_fork')) {
-            $this->markTestSkipped('pcntl_fork not available for test');
+            $this->markTestSkipped();
         }
 
         $child_pid = 0;
@@ -55,5 +55,37 @@ class ProcessTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->assertGreaterThan(0, $child_pid);
+    }
+
+    public function testForkedPopulatedOnFork()
+    {
+        if (!function_exists('pcntl_fork')) {
+            $this->markTestSkipped();
+        }
+
+        $forked = null;
+
+        if (Process::parent($child_pid, $forked)) {
+            // nothing
+        } else {
+            // exiting so that the child process doesn't interrupt phpunit
+            exit;
+        }
+
+        $this->assertTrue($forked);
+    }
+
+    public function testCanForkWithNoArguments()
+    {
+        if (!function_exists('pcntl_fork')) {
+            $this->markTestSkipped();
+        }
+
+        if (Process::parent()) {
+            // nothing
+        } else {
+            // exiting so that the child process doesn't interrupt phpunit
+            exit;
+        }
     }
 }

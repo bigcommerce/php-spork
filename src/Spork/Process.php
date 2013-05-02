@@ -19,23 +19,37 @@ class Process
     /**
      * Attempts to fork a child process.
      *
+     * @param  int  $child_pid reference set to child PID in the parent branch
+     * @param  bool $forked    reference set in both branches to TRUE if forking worked, otherwise FALSE
      * @return TRUE in the parent when a child was forked, otherwise FALSE
      */
-    public static function parent (&$child_pid)
+    public static function parent (&$child_pid = null, &$forked = null)
     {
         if (!function_exists('pcntl_fork')) {
+            $forked = false;
+
             return false;
         }
 
         $pid = pcntl_fork();
 
-        if ($pid <= 0) {
-            // fork failed or this is the child process
+        if ($pid == -1) {
+            // forking failed
+            $forked = false;
+
             return false;
         }
 
-        // fork ok, this is the parent process
+        if ($pid == 0) {
+            // forked ok; this is the child process
+            $forked = true;
+
+            return false;
+        }
+
+        // forked ok; this is the parent process
         $child_pid = $pid;
+        $forked = true;
 
         return true;
     }
