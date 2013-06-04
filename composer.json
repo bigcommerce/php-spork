@@ -1,5 +1,6 @@
 {
     "name": "gwilym/spork",
+    "description": "Spoon-fed process forking for PHP.",
     "type": "library",
     "license": "MIT",
     "homepage": "https://github.com/gwilym/php-spork",
